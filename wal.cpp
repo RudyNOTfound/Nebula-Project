@@ -14,8 +14,11 @@ WAL::~WAL() {
 void WAL::log(const std::string& line) {
     if (!out_.is_open()) return;
     out_ << line << "\n";
-    out_.flush();   // ← CRITICAL: forces OS to write to disk immediately
-                    // Without this, data sits in a buffer and is lost on crash
+    write_count_++;
+    if (write_count_ % 100 == 0) {   // flush every 100 writes
+        out_.flush();
+        write_count_ = 0;
+    }
 }
 
 void WAL::replay(Store& db) {
