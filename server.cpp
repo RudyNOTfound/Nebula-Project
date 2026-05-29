@@ -117,7 +117,7 @@ void handleClient(int client_fd, Store &db, WAL &wal)
 
 int main()
 {
-    Store db;
+    Store db(100000); // ← evict LRU keys when store exceeds 100k keys
     WAL wal("redis.wal");
 
     // On startup: load snapshot first, then replay WAL on top
