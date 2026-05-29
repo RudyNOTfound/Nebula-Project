@@ -13,6 +13,8 @@ int connect_to(int port) {
     addr.sin_port        = htons(port);
     inet_pton(AF_INET, "127.0.0.1", &addr.sin_addr);
     connect(fd, (sockaddr*)&addr, sizeof(addr));
+
+    
     return fd;
 }
 
