@@ -8,10 +8,14 @@ void Store::setRaw(const std::string &key, const std::string &val, long long exp
     data[key] = {val, expire_at};
 }
 
-std::unordered_map<std::string, Entry> Store::getAll()
+std::unordered_map<std::string, SnapEntry> Store::getAll()
 {
     std::lock_guard<std::mutex> lock(mtx);
-    return data; // returns a copy — safe to use outside the lock
+    std::unordered_map<std::string, SnapEntry> result;
+    for (auto& [key, entry] : data) {
+        result[key] = {entry.value, entry.expire_at};
+    }
+    return result;
 }
 
 Store::Store(int max_keys) : max_keys_(max_keys) {}

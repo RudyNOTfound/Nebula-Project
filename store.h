@@ -12,6 +12,11 @@ struct Entry
     std::list<std::string>::iterator lru_it; // ← points to position in LRU list
 };
 
+struct SnapEntry {
+    std::string value;
+    long long   expire_at;
+};
+
 // The store — one class that wraps everything
 class Store
 {
@@ -24,7 +29,7 @@ public:
     int size();
     // In store.h — add these two to the public section:
     void setRaw(const std::string &key, const std::string &val, long long expire_at);
-    std::unordered_map<std::string, Entry> getAll();
+    std::unordered_map<std::string, SnapEntry> getAll();
 
 private:
     std::unordered_map<std::string, Entry> data; // THE hashmap

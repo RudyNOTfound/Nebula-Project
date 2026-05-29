@@ -6,8 +6,9 @@ void saveSnapshot(Store& db, const std::string& path) {
     auto entries = db.getAll();
     std::ofstream out(path, std::ios::trunc);
     for (auto& [key, entry] : entries) {
-        // Format: key \t value \t expire_at
-        out << key << "\t" << entry.value << "\t" << entry.expire_at << "\n";
+        out << key << "\t"
+            << entry.value << "\t"
+            << entry.expire_at << "\n";
     }
     out.flush();
 }

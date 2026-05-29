@@ -127,15 +127,15 @@ int main()
     std::cout << "Loaded " << db.size() << " keys from disk.\n";
 
     // Background thread: snapshot every 60 seconds
-    std::thread([&db, &wal]()
-                {
-        while (true) {
-            std::this_thread::sleep_for(std::chrono::seconds(60));
-            saveSnapshot(db, "redis.snap");
-            wal.clear();
-            std::cout << "Snapshot saved.\n";
-        } })
-        .detach();
+    // std::thread([&db, &wal]()
+    //             {
+    //     while (true) {
+    //         std::this_thread::sleep_for(std::chrono::seconds(60));
+    //         saveSnapshot(db, "redis.snap");
+    //         wal.clear();
+    //         std::cout << "Snapshot saved.\n";
+    //     } })
+    //     .detach();
 
     // Step 1: Create socket
     int server_fd = socket(AF_INET, SOCK_STREAM, 0);
